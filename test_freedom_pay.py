@@ -2,7 +2,6 @@ import pytest
 import requests
 import csv
 import uuid
-import json
 import os
 from datetime import datetime
 from typing import List, Dict, Tuple
@@ -70,12 +69,14 @@ def write_failure_to_file(store_id: str, terminal_id: str, dba_name: str, proper
             
         f.write("\nERROR DETAILS:\n")
         if "Store name mismatch" in failure_message:
-            # Extract expected and actual names from the error message
             expected = failure_message.split("Expected: ")[1].split(", Got: ")[0]
             actual = failure_message.split("Got: ")[1]
             f.write("Type: Store Name Mismatch\n")
             f.write(f"Expected Name: {expected}\n")
             f.write(f"Actual Name: {actual}\n")
+        elif "Timer started with incorrect value" in failure_message:
+            f.write("Type: Invalid Timer Value\n")
+            f.write(f"Details: {failure_message}\n")
         elif "API Response missing" in failure_message:
             f.write("Type: API Response Error\n")
             f.write(f"Details: {failure_message}\n")
@@ -106,6 +107,35 @@ def take_screenshot(driver, store_id: str, filename: str):
     driver.save_screenshot(filepath)
     print(f"\nScreenshot saved: {filepath}")
 
+def write_timer_to_file(store_id: str, terminal_id: str, dba_name: str, property_id: str, revenue_center_id: str, timer_value: str):
+    results_dir = "results"
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
+        
+    timestamp = datetime.now().strftime('%Y-%m-%d')
+    filepath = os.path.join(results_dir, f"timer_values_{timestamp}.txt")
+
+    timer_status = "PASS" if timer_value in ('05:00', '04:59', '04:58') else "FAIL"
+    
+    with open(filepath, 'a', encoding='utf-8') as f:
+        f.write("=" * 50 + "\n")
+        f.write("STORE INFORMATION:\n")
+        f.write(f"Store ID: {store_id}\n")
+        f.write(f"Terminal ID: {terminal_id}\n")
+        f.write(f"Property ID: {property_id}\n")
+        f.write(f"Revenue Center ID: {revenue_center_id}\n")
+        
+        if dba_name:
+            f.write(f"DBA Name: {dba_name}\n")
+        else:
+            f.write("DBA Name: <empty>\n")
+            
+        f.write(f"\nTIMER VALUE AT START: {timer_value}")
+        if timer_status != "PASS":
+            f.write(" (FAIL)")
+        f.write("\n")
+        f.write("=" * 50 + "\n\n")
+
 class TestFreedomPayAPI:
     
     @pytest.fixture
@@ -117,102 +147,70 @@ class TestFreedomPayAPI:
         store_id, terminal_id, dba_name, property_id, revenue_center_id = store_tuple
         base_page = BasePage(driver)
         is_safari = is_mac()
-        
-        print(f"\nTesting transaction")
-        print(f"Store ID: {store_id}")
-        print(f"Terminal ID: {terminal_id}")
-        print(f"DBA Name: {dba_name}")
-        print(f"Property ID: {property_id}")
-        print(f"Revenue Center ID: {revenue_center_id}")
-        print(f"Browser: {'Safari' if is_safari else 'Chrome'}")
+        failures = []
+        timer_value = "Not Found"
         
         try:
             response = create_freedom_pay_transaction(store_id, terminal_id)
-            print(f"Response: {json.dumps(response, indent=2)}")
-            
             checkout_url = response['CheckoutUrl']
-            print(f"Response: {json.dumps(response, indent=2)}")
-            print(f"Checkout URL type: {type(checkout_url)}")
-            
-            # Check if URL is valid (must start with https://)
-            if not checkout_url.startswith('https://'):
-                write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id,
-                    f"Invalid URL format received: {checkout_url}")
-                pytest.skip("Skipping test due to invalid URL format")
-                
-            print(f"Final Checkout URL: {checkout_url}")
-            
-            if not isinstance(checkout_url, str):
-                write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id,
-                    f"Invalid checkout URL format. Expected string, got {type(checkout_url)}")
-                pytest.skip("Skipping test due to invalid URL type")
-            
-            if not checkout_url:
-                write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id,
-                    "Empty checkout URL received")
-                return  # Skip to next store
+
+            assert checkout_url.startswith('https://'), f"Invalid URL format received: {checkout_url}"
+            assert isinstance(checkout_url, str), f"Invalid checkout URL format. Expected string, got {type(checkout_url)}"
+            assert checkout_url, "Empty checkout URL received"
+
+            driver.get(checkout_url)
 
             try:
-                driver.get(checkout_url)
+                timer_element = base_page.wait_for_element_visible(CommonLocators.TIMER)
+                timer_value = timer_element.get_attribute('textContent').strip()
+                assert timer_value.startswith(('05:00', '04:59', '04:58')), f"Timer started with incorrect value: {timer_value}. Expected: 05:00 or 04:59"
             except Exception as e:
-                write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id,
-                    f"Failed to navigate to URL: {checkout_url}. Error: {str(e)}")
-                return  # Skip to next store
-
-            failures = []
-
-            if not base_page.is_element_present(CommonLocators.GOOGLE_PAY_BUTTON):
-                failures.append("Google Pay button not found")
-            if not base_page.is_element_present(CommonLocators.TIMER):
-                failures.append("Timer not found")
+                failures.append(f"Timer check failed: {str(e)}")
+            
+            # Google Pay check
+            try:
+                assert base_page.is_element_present(CommonLocators.GOOGLE_PAY_BUTTON), "Google Pay button not found"
+            except Exception as e:
+                failures.append(f"Google Pay check failed: {str(e)}")
 
             if is_safari:
-                if not base_page.is_element_present(SafariLocators.APPLE_PAY_BUTTON):
-                    failures.append("Apple Pay button not found")
+                try:
+                    assert base_page.is_element_present(SafariLocators.APPLE_PAY_BUTTON), "Apple Pay button not found"
+                except Exception as e:
+                    failures.append(f"Apple Pay check failed: {str(e)}")
 
             if dba_name:
                 try:
                     base_page.wait_for_element_visible(CommonLocators.STORE_NAME)
                     actual_store_name = base_page.get_text(CommonLocators.STORE_NAME)
-                    if dba_name not in actual_store_name:
-                        failures.append(f"Store name mismatch. Expected: {dba_name}, Got: {actual_store_name}")
+                    assert dba_name in actual_store_name, f"Store name mismatch. Expected: {dba_name}, Got: {actual_store_name}"
                 except Exception as e:
-                    failures.append(f"Store name verification failed: {str(e)}")
+                    failures.append(f"Store name check failed: {str(e)}")
 
             try:
                 base_page.switch_to_frame((By.CSS_SELECTOR, "iframe#hpc--card-frame"))
-                
-
-                if not base_page.is_element_present(CommonLocators.POSTAL_CODE_FIELD):
-                    failures.append("Postal code field not found")
-                
-
+                assert base_page.is_element_present(CommonLocators.POSTAL_CODE_FIELD), "Postal code field not found"
                 base_page.switch_to_default_content()
             except Exception as e:
-                failures.append(f"Frame switching or postal code verification failed: {str(e)}")
+                failures.append(f"Postal code check failed: {str(e)}")
                 base_page.switch_to_default_content()
 
+            write_timer_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, timer_value)
+            
             if failures:
-                # Use store_id in filename if dba_name is empty
                 screenshot_name = f"failure_{dba_name}" if dba_name else f"failure_store_{store_id}"
                 take_screenshot(driver, store_id, screenshot_name)
-
+                
                 for failure in failures:
                     write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, failure)
                 
                 pytest.fail("\n".join(failures))
+
+        except AssertionError as e:
+            write_timer_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, timer_value)
+            write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, str(e))
+            pytest.skip(str(e))
             
-        except KeyError as e:
-            write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id,
-                f"API Response missing required field: {e}")
-            return  # Skip to next store
-        except requests.exceptions.RequestException as e:
-            error_message = f"API Request Failed: {str(e)}"
-            if hasattr(e.response, 'text'):
-                error_message += f"\nResponse text: {e.response.text}"
-            
-            write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, error_message)
-            return  # Skip to next store
         except Exception as e:
             error_filename = f"error_{store_id}"
             try:
