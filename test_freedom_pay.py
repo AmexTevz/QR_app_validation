@@ -10,19 +10,40 @@ from src.locators.store_locators import CommonLocators, SafariLocators
 from selenium.webdriver.common.by import By
 from conftest import is_mac
 
-def read_store_data(csv_path: str) -> List[Tuple[str, str, str, str, str]]:
+def read_store_data(csv_path: str) -> List[Tuple[str, str, str, str, str, str, str]]:
     store_data = []
-    with open(csv_path, 'r') as file:
+    with open(csv_path, 'r', encoding='utf-8') as file:
         csv_reader = csv.reader(file)
-        next(csv_reader)
+        next(csv_reader)  # Skip header row
         for row in csv_reader:
-            if len(row) >= 5:
-                store_id = str(int(float(row[0].strip())))
-                terminal_id = str(int(float(row[1].strip())))
-                dba_name = row[2].strip()
-                property_id = row[3].strip()
-                revenue_center_id = row[4].strip()
-                store_data.append((store_id, terminal_id, dba_name, property_id, revenue_center_id))
+            try:
+                if len(row) >= 7:  # Check we have all required columns
+                    store_id = str(int(float(row[0].strip())))
+                    terminal_id = str(int(float(row[1].strip())))
+                    property_id = row[2].strip()
+                    revenue_center_id = row[3].strip()
+                    location_name = row[4].strip()
+                    revenue_center_name = row[5].strip()
+                    dba_name = row[6].strip()
+                    
+                    store_data.append((
+                        store_id,
+                        terminal_id,
+                        property_id,
+                        revenue_center_id,
+                        location_name,
+                        revenue_center_name,
+                        dba_name
+                    ))
+                    print(f"Loaded store: {store_id} - {dba_name}")  # Debug print
+            except Exception as e:
+                print(f"Error processing row: {row}")
+                print(f"Error: {str(e)}")
+                continue
+                
+    if not store_data:
+        raise ValueError("No valid data found in stores.csv")
+        
     return store_data
 
 def create_freedom_pay_transaction(store_id: str, terminal_id: str) -> Dict:
@@ -115,7 +136,7 @@ def write_timer_to_file(store_id: str, terminal_id: str, dba_name: str, property
     timestamp = datetime.now().strftime('%Y-%m-%d')
     filepath = os.path.join(results_dir, f"timer_values_{timestamp}.txt")
 
-    timer_status = "PASS" if timer_value in ('05:00', '04:59', '04:58') else "FAIL"
+    timer_status = "PASS" if timer_value in ('05:00', '04:59') else "FAIL"
     
     with open(filepath, 'a', encoding='utf-8') as f:
         f.write("=" * 50 + "\n")
@@ -136,19 +157,89 @@ def write_timer_to_file(store_id: str, terminal_id: str, dba_name: str, property
         f.write("\n")
         f.write("=" * 50 + "\n\n")
 
+def write_results_to_csv(store_id: str, terminal_id: str, property_id: str, revenue_center_id: str, 
+                        location_name: str, revenue_center_name: str, dba_name: str, 
+                        results: Dict[str, bool], timer_value: str):
+    results_dir = "results"
+    if not os.path.exists(results_dir):
+        os.makedirs(results_dir)
+        
+    timestamp = datetime.now().strftime('%Y-%m-%d')
+    filepath = os.path.join(results_dir, f"test_results_{timestamp}.csv")
+    
+    # Define headers
+    headers = [
+        'Store ID',
+        'Terminal ID',
+        'Property ID',
+        'RVC ID',
+        'Location Name',
+        'RVC Name',
+        'DBA Name',
+        'Timer',
+        'Timer at Launch',
+        'GooglePay',
+        'ApplePay',
+        'DB Name Match',
+        'Postal Code'
+    ]
+    
+    # Write headers if file doesn't exist
+    if not os.path.exists(filepath):
+        with open(filepath, 'w', newline='', encoding='utf-8') as f:
+            writer = csv.writer(f)
+            writer.writerow(headers)
+
+    if not dba_name or dba_name.strip() == "" or dba_name.strip() == "N/A":
+        dba_name_value = "N/A"
+        db_name_status = "N/A"
+    else:
+        dba_name_value = dba_name
+        db_name_status = "PASS" if results.get('store_name_match', False) else "FAIL"
+
+    row = [
+        store_id,
+        terminal_id,
+        property_id,
+        revenue_center_id,
+        location_name,
+        revenue_center_name,
+        dba_name_value,  # Use the determined value
+        'PASS' if results.get('timer_present', False) else 'FAIL',
+        timer_value,  # Actual timer value at launch
+        'PASS' if results.get('googlepay_present', False) else 'FAIL',
+        'PASS' if results.get('applepay_present', False) else 'FAIL',
+        db_name_status,  # Will be N/A if dba_name is empty
+        'PASS' if results.get('postal_code_present', False) else 'FAIL'
+    ]
+    
+    with open(filepath, 'a', newline='', encoding='utf-8') as f:
+        writer = csv.writer(f)
+        writer.writerow(row)
+
 class TestFreedomPayAPI:
     
     @pytest.fixture
-    def store_data(self) -> List[Tuple[str, str, str, str, str]]:
+    def store_data(self) -> List[Tuple[str, str, str, str, str, str, str]]:
         return read_store_data('src/data/stores.csv')
     
     @pytest.mark.parametrize("store_tuple", read_store_data('src/data/stores.csv'))
     def test_create_transaction(self, store_tuple, driver):
-        store_id, terminal_id, dba_name, property_id, revenue_center_id = store_tuple
+        store_id, terminal_id, property_id, revenue_center_id, location_name, revenue_center_name, dba_name = store_tuple
         base_page = BasePage(driver)
         is_safari = is_mac()
         failures = []
         timer_value = "Not Found"
+        
+        # Dictionary to track test results
+        results = {
+            'timer_present': False,
+            'timer_correct': False,
+            'googlepay_present': False,
+            'applepay_present': False,
+            'store_name_match': False,
+            'postal_code_present': False
+        }
         
         try:
             response = create_freedom_pay_transaction(store_id, terminal_id)
@@ -160,42 +251,66 @@ class TestFreedomPayAPI:
 
             driver.get(checkout_url)
 
+            # Timer check - moved to top after page load
             try:
                 timer_element = base_page.wait_for_element_visible(CommonLocators.TIMER)
+                results['timer_present'] = True
                 timer_value = timer_element.get_attribute('textContent').strip()
-                assert timer_value.startswith(('05:00', '04:59', '04:58')), f"Timer started with incorrect value: {timer_value}. Expected: 05:00 or 04:59"
+                results['timer_correct'] = timer_value.startswith(('05:00', '04:59', '04:58'))
+                if not results['timer_correct']:
+                    failures.append(f"Timer started with incorrect value: {timer_value}. Expected: 05:00 or 04:59")
             except Exception as e:
+                results['timer_present'] = False
+                results['timer_correct'] = False
                 failures.append(f"Timer check failed: {str(e)}")
             
             # Google Pay check
             try:
-                assert base_page.is_element_present(CommonLocators.GOOGLE_PAY_BUTTON), "Google Pay button not found"
+                results['googlepay_present'] = base_page.is_element_present(CommonLocators.GOOGLE_PAY_BUTTON)
+                if not results['googlepay_present']:
+                    failures.append("Google Pay button not found")
             except Exception as e:
+                results['googlepay_present'] = False
                 failures.append(f"Google Pay check failed: {str(e)}")
 
+            # Apple Pay check (Safari only)
             if is_safari:
                 try:
-                    assert base_page.is_element_present(SafariLocators.APPLE_PAY_BUTTON), "Apple Pay button not found"
+                    results['applepay_present'] = base_page.is_element_present(SafariLocators.APPLE_PAY_BUTTON)
+                    if not results['applepay_present']:
+                        failures.append("Apple Pay button not found")
                 except Exception as e:
+                    results['applepay_present'] = False
                     failures.append(f"Apple Pay check failed: {str(e)}")
 
+            # Store name check
             if dba_name:
                 try:
                     base_page.wait_for_element_visible(CommonLocators.STORE_NAME)
                     actual_store_name = base_page.get_text(CommonLocators.STORE_NAME)
-                    assert dba_name in actual_store_name, f"Store name mismatch. Expected: {dba_name}, Got: {actual_store_name}"
+                    results['store_name_match'] = dba_name in actual_store_name
+                    if not results['store_name_match']:
+                        failures.append(f"Store name mismatch. Expected: {dba_name}, Got: {actual_store_name}")
                 except Exception as e:
+                    results['store_name_match'] = False
                     failures.append(f"Store name check failed: {str(e)}")
 
+            # Postal code check
             try:
                 base_page.switch_to_frame((By.CSS_SELECTOR, "iframe#hpc--card-frame"))
-                assert base_page.is_element_present(CommonLocators.POSTAL_CODE_FIELD), "Postal code field not found"
+                results['postal_code_present'] = base_page.is_element_present(CommonLocators.POSTAL_CODE_FIELD)
+                if not results['postal_code_present']:
+                    failures.append("Postal code field not found")
                 base_page.switch_to_default_content()
             except Exception as e:
+                results['postal_code_present'] = False
                 failures.append(f"Postal code check failed: {str(e)}")
                 base_page.switch_to_default_content()
 
+            # Write results to files
             write_timer_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, timer_value)
+            write_results_to_csv(store_id, terminal_id, property_id, revenue_center_id, 
+                               location_name, revenue_center_name, dba_name, results, timer_value)
             
             if failures:
                 screenshot_name = f"failure_{dba_name}" if dba_name else f"failure_store_{store_id}"
@@ -208,6 +323,8 @@ class TestFreedomPayAPI:
 
         except AssertionError as e:
             write_timer_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, timer_value)
+            write_results_to_csv(store_id, terminal_id, property_id, revenue_center_id, 
+                               location_name, revenue_center_name, dba_name, results, timer_value)
             write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, str(e))
             pytest.skip(str(e))
             
