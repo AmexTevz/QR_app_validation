@@ -89,7 +89,10 @@ def write_failure_to_file(store_id: str, terminal_id: str, dba_name: str, proper
             f.write("DBA Name: <empty>\n")
             
         f.write("\nERROR DETAILS:\n")
-        if "Store name mismatch" in failure_message:
+        if "Store not configured" in failure_message:
+            f.write("Type: Store Configuration Error\n")
+            f.write(f"Details: {failure_message}\n")
+        elif "Store name mismatch" in failure_message:
             expected = failure_message.split("Expected: ")[1].split(", Got: ")[0]
             actual = failure_message.split("Got: ")[1]
             f.write("Type: Store Name Mismatch\n")
@@ -169,6 +172,7 @@ def write_results_to_csv(store_id: str, terminal_id: str, property_id: str, reve
     
     # Define headers
     headers = [
+        'Batch',
         'Store ID',
         'Terminal ID',
         'Property ID',
@@ -197,27 +201,62 @@ def write_results_to_csv(store_id: str, terminal_id: str, property_id: str, reve
         dba_name_value = dba_name
         db_name_status = "PASS" if results.get('store_name_match', False) else "FAIL"
 
-    row = [
-        store_id,
-        terminal_id,
-        property_id,
-        revenue_center_id,
-        location_name,
-        revenue_center_name,
-        dba_name_value,  # Use the determined value
-        'PASS' if results.get('timer_present', False) else 'FAIL',
-        timer_value,  # Actual timer value at launch
-        'PASS' if results.get('googlepay_present', False) else 'FAIL',
-        'PASS' if results.get('applepay_present', False) else 'FAIL',
-        db_name_status,  # Will be N/A if dba_name is empty
-        'PASS' if results.get('postal_code_present', False) else 'FAIL'
-    ]
+    # Special handling for invalid URL cases
+    if "Invalid URL" in timer_value:
+        row = [
+            '2',  # Batch number
+            store_id,
+            terminal_id,
+            property_id,
+            revenue_center_id,
+            location_name,
+            revenue_center_name,
+            dba_name_value,  # This will be N/A if empty
+            'FAIL',  # Timer presence
+            timer_value,  # Will show "Invalid URL - Unable to access"
+            'N/A',  # GooglePay
+            'N/A',  # ApplePay
+            db_name_status,  # Will be N/A if no name
+            'N/A'   # Postal Code
+        ]
+    else:
+        row = [
+            '2',  # Batch number
+            store_id,
+            terminal_id,
+            property_id,
+            revenue_center_id,
+            location_name,
+            revenue_center_name,
+            dba_name_value,
+            'PASS' if results.get('timer_present', False) else 'FAIL',
+            timer_value,
+            'PASS' if results.get('googlepay_present', False) else 'FAIL',
+            'PASS' if results.get('applepay_present', False) else 'FAIL',
+            db_name_status,
+            'PASS' if results.get('postal_code_present', False) else 'FAIL'
+        ]
     
     with open(filepath, 'a', newline='', encoding='utf-8') as f:
         writer = csv.writer(f)
         writer.writerow(row)
 
 class TestFreedomPayAPI:
+    # Class variables instead of instance variables
+    total_tests = 0
+    passed_tests = 0
+    failed_tests = 0
+    name_mismatch_count = 0
+    critical_failures = 0
+
+    @pytest.fixture(autouse=True)
+    def _setup_class(self):
+        """Reset counters before each test session"""
+        TestFreedomPayAPI.total_tests = 0
+        TestFreedomPayAPI.passed_tests = 0
+        TestFreedomPayAPI.failed_tests = 0
+        TestFreedomPayAPI.name_mismatch_count = 0
+        TestFreedomPayAPI.critical_failures = 0
     
     @pytest.fixture
     def store_data(self) -> List[Tuple[str, str, str, str, str, str, str]]:
@@ -225,6 +264,7 @@ class TestFreedomPayAPI:
     
     @pytest.mark.parametrize("store_tuple", read_store_data('src/data/stores.csv'))
     def test_create_transaction(self, store_tuple, driver):
+        TestFreedomPayAPI.total_tests += 1
         store_id, terminal_id, property_id, revenue_center_id, location_name, revenue_center_name, dba_name = store_tuple
         base_page = BasePage(driver)
         is_safari = is_mac()
@@ -245,9 +285,33 @@ class TestFreedomPayAPI:
             response = create_freedom_pay_transaction(store_id, terminal_id)
             checkout_url = response['CheckoutUrl']
 
+            # Check for null/None URL first
+            if not checkout_url:
+                error_msg = f"Store not configured. API Response: {response.get('ResponseMessage', 'No message')}"
+                write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, error_msg)
+                
+                # Set all results to N/A for CSV
+                results = {
+                    'timer_present': False,
+                    'timer_correct': False,
+                    'googlepay_present': False,
+                    'applepay_present': False,
+                    'store_name_match': False,
+                    'postal_code_present': False
+                }
+                timer_value = "Invalid URL - Unable to access"
+                
+                # Write to CSV before skipping
+                write_results_to_csv(store_id, terminal_id, property_id, revenue_center_id, 
+                                   location_name, revenue_center_name, dba_name, results, timer_value)
+                
+                TestFreedomPayAPI.critical_failures += 1
+                TestFreedomPayAPI.failed_tests += 1
+                pytest.skip(error_msg)  # Skip without screenshot since we can't load the page
+
+            # URL format validation
             assert checkout_url.startswith('https://'), f"Invalid URL format received: {checkout_url}"
             assert isinstance(checkout_url, str), f"Invalid checkout URL format. Expected string, got {type(checkout_url)}"
-            assert checkout_url, "Empty checkout URL received"
 
             driver.get(checkout_url)
 
@@ -255,13 +319,22 @@ class TestFreedomPayAPI:
             try:
                 timer_element = base_page.wait_for_element_visible(CommonLocators.TIMER)
                 results['timer_present'] = True
-                timer_value = timer_element.get_attribute('textContent').strip()
-                results['timer_correct'] = timer_value.startswith(('05:00', '04:59', '04:58'))
-                if not results['timer_correct']:
-                    failures.append(f"Timer started with incorrect value: {timer_value}. Expected: 05:00 or 04:59")
+                timer_text = timer_element.get_attribute('textContent')
+                
+                if timer_text is None:
+                    timer_value = "No timer text found"
+                    results['timer_correct'] = False
+                    failures.append(f"Timer text is empty")
+                else:
+                    timer_value = timer_text.strip()
+                    results['timer_correct'] = timer_value.startswith(('05:00', '04:59', '04:58'))
+                    if not results['timer_correct']:
+                        failures.append(f"Timer started with incorrect value: {timer_value}. Expected: 05:00 or 04:59")
+                        
             except Exception as e:
                 results['timer_present'] = False
                 results['timer_correct'] = False
+                timer_value = "Timer not found"
                 failures.append(f"Timer check failed: {str(e)}")
             
             # Google Pay check
@@ -313,30 +386,65 @@ class TestFreedomPayAPI:
                                location_name, revenue_center_name, dba_name, results, timer_value)
             
             if failures:
-                screenshot_name = f"failure_{dba_name}" if dba_name else f"failure_store_{store_id}"
+                # Determine failure type for counting
+                if any("Store name mismatch" in failure for failure in failures):
+                    TestFreedomPayAPI.name_mismatch_count += 1
+                    prefix = "name_mismatch"
+                else:
+                    TestFreedomPayAPI.critical_failures += 1
+                    prefix = "critical"
+                
+                # Create screenshot name
+                if dba_name:
+                    screenshot_name = f"{prefix}_{dba_name}"
+                else:
+                    screenshot_name = f"{prefix}_store_{store_id}"
+                
                 take_screenshot(driver, store_id, screenshot_name)
                 
                 for failure in failures:
                     write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, failure)
                 
-                pytest.fail("\n".join(failures))
+                TestFreedomPayAPI.failed_tests += 1
+                pytest.fail(f"Store {store_id} failed")
+            else:
+                TestFreedomPayAPI.passed_tests += 1
 
         except AssertionError as e:
             write_timer_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, timer_value)
             write_results_to_csv(store_id, terminal_id, property_id, revenue_center_id, 
                                location_name, revenue_center_name, dba_name, results, timer_value)
             write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, str(e))
+            
+            screenshot_name = f"critical_{store_id}_assertion_error"
+            take_screenshot(driver, store_id, screenshot_name)
             pytest.skip(str(e))
             
         except Exception as e:
-            error_filename = f"error_{store_id}"
+            screenshot_name = f"critical_store_{store_id}_error"
             try:
-                driver.save_screenshot(os.path.join("results", "screenshots", f"{error_filename}.png"))
+                driver.save_screenshot(os.path.join("results", "screenshots", f"{screenshot_name}.png"))
             except Exception as screenshot_error:
                 print(f"Failed to take screenshot: {str(screenshot_error)}")
 
             write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, str(e))
             raise
+
+    @pytest.fixture(scope="session", autouse=True)
+    def _print_summary(self, request):
+        """Print summary after all tests are done"""
+        def print_summary():
+            print("\n" + "="*50)
+            print("TEST SUMMARY")
+            print("="*50)
+            print(f"Total Tests Run: {TestFreedomPayAPI.total_tests}")
+            print(f"Tests Passed: {TestFreedomPayAPI.passed_tests}")
+            print(f"Tests Failed: {TestFreedomPayAPI.failed_tests}")
+            print(f"Name Mismatches: {TestFreedomPayAPI.name_mismatch_count}")
+            print(f"Critical Failures: {TestFreedomPayAPI.critical_failures}")
+            print("="*50 + "\n")
+        
+        request.addfinalizer(print_summary)
 
 if __name__ == "__main__":
     pytest.main([__file__, "-v"]) 
