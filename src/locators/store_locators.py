@@ -8,7 +8,7 @@ class CommonLocators:
     STORE_NAME = (By.CSS_SELECTOR, "h1.navbar-store")
 
 class SafariLocators:
-    APPLE_PAY_BUTTON = (By.CSS_SELECTOR, "a#ApplePayButton")
+    APPLE_PAY_BUTTON = (By.CSS_SELECTOR, "div#applePay")
 
 
 

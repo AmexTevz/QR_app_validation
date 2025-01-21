@@ -32,6 +32,7 @@ def driver():
         # Safari setup
         service = SafariService()
         driver = webdriver.Safari(service=service)
+        driver.maximize_window()
     else:
         # Chrome setup with webdriver manager
         options = ChromeOptions()
@@ -47,7 +48,7 @@ def driver():
     driver.implicitly_wait(TIMEOUTS['implicit'])
     driver.set_page_load_timeout(TIMEOUTS['page_load'])
     driver.set_script_timeout(TIMEOUTS['page_load'])
-    
+    driver.maximize_window()
     yield driver
     
     driver.quit()
