@@ -10,21 +10,27 @@ from src.locators.store_locators import CommonLocators, SafariLocators
 from selenium.webdriver.common.by import By
 from conftest import is_mac
 
-def read_store_data(csv_path: str) -> List[Tuple[str, str, str, str, str, str, str]]:
+def read_store_data(csv_path: str) -> List[Tuple[str, str, str, str, str, str, str, str]]:
     store_data = []
     with open(csv_path, 'r', encoding='utf-8') as file:
         csv_reader = csv.reader(file)
         next(csv_reader)  # Skip header row
         for row in csv_reader:
             try:
-                if len(row) >= 7:  # Check we have all required columns
-                    store_id = str(int(float(row[0].strip())))
-                    terminal_id = str(int(float(row[1].strip())))
-                    property_id = row[2].strip()
-                    revenue_center_id = row[3].strip()
-                    location_name = row[4].strip()
-                    revenue_center_name = row[5].strip()
-                    dba_name = row[6].strip()
+                if len(row) >= 8:  # Check we have all required columns
+                    batch = row[0].strip()  # Batch is now first column
+                    store_id = str(int(float(row[1].strip())))  # Store ID is second column
+                    terminal_id = str(int(float(row[2].strip())))  # Terminal ID is third column
+                    property_id = row[3].strip()
+                    revenue_center_id = row[4].strip()
+                    location_name = row[5].strip()
+                    revenue_center_name = row[6].strip()
+                    dba_name = row[7].strip()
+                    
+                    print(f"\nValidating store data:")
+                    print(f"Batch: {batch}")
+                    print(f"Store ID: {store_id} (original: {row[1]})")
+                    print(f"Terminal ID: {terminal_id} (original: {row[2]})")
                     
                     store_data.append((
                         store_id,
@@ -33,9 +39,9 @@ def read_store_data(csv_path: str) -> List[Tuple[str, str, str, str, str, str, s
                         revenue_center_id,
                         location_name,
                         revenue_center_name,
-                        dba_name
+                        dba_name,
+                        batch
                     ))
-                    print(f"Loaded store: {store_id} - {dba_name}")  # Debug print
             except Exception as e:
                 print(f"Error processing row: {row}")
                 print(f"Error: {str(e)}")
@@ -47,7 +53,6 @@ def read_store_data(csv_path: str) -> List[Tuple[str, str, str, str, str, str, s
     return store_data
 
 def create_freedom_pay_transaction(store_id: str, terminal_id: str) -> Dict:
-
     url = "https://payments.freedompay.com/checkoutservice/checkoutservice.svc/CreateTransaction"
     
     headers = {
@@ -63,7 +68,14 @@ def create_freedom_pay_transaction(store_id: str, terminal_id: str) -> Dict:
         "MerchantReferenceCode": str(uuid.uuid4())
     }
     
+    print(f"\nMaking API request for Store {store_id}:")
+    print(f"URL: {url}")
+    print(f"Payload: {payload}")
+    
     response = requests.post(url, headers=headers, json=payload)
+    print(f"Response Status: {response.status_code}")
+    print(f"Response Body: {response.text}")
+    
     response.raise_for_status() 
     return response.json()
 
@@ -162,7 +174,7 @@ def write_timer_to_file(store_id: str, terminal_id: str, dba_name: str, property
 
 def write_results_to_csv(store_id: str, terminal_id: str, property_id: str, revenue_center_id: str, 
                         location_name: str, revenue_center_name: str, dba_name: str, 
-                        results: Dict[str, bool], timer_value: str):
+                        results: Dict[str, bool], timer_value: str, batch: str):
     results_dir = "results"
     if not os.path.exists(results_dir):
         os.makedirs(results_dir)
@@ -204,24 +216,24 @@ def write_results_to_csv(store_id: str, terminal_id: str, property_id: str, reve
     # Special handling for invalid URL cases
     if "Invalid URL" in timer_value:
         row = [
-            '2',  # Batch number
+            batch,  # Batch number is first
             store_id,
             terminal_id,
             property_id,
             revenue_center_id,
             location_name,
             revenue_center_name,
-            dba_name_value,  # This will be N/A if empty
-            'FAIL',  # Timer presence
-            timer_value,  # Will show "Invalid URL - Unable to access"
-            'N/A',  # GooglePay
-            'N/A',  # ApplePay
-            db_name_status,  # Will be N/A if no name
-            'N/A'   # Postal Code
+            dba_name_value,
+            'FAIL',
+            timer_value,
+            'N/A',
+            'N/A',
+            db_name_status,
+            'N/A'
         ]
     else:
         row = [
-            '2',  # Batch number
+            batch,  # Batch number is first
             store_id,
             terminal_id,
             property_id,
@@ -259,13 +271,13 @@ class TestFreedomPayAPI:
         TestFreedomPayAPI.critical_failures = 0
     
     @pytest.fixture
-    def store_data(self) -> List[Tuple[str, str, str, str, str, str, str]]:
+    def store_data(self) -> List[Tuple[str, str, str, str, str, str, str, str]]:
         return read_store_data('src/data/stores.csv')
     
     @pytest.mark.parametrize("store_tuple", read_store_data('src/data/stores.csv'))
     def test_create_transaction(self, store_tuple, driver):
         TestFreedomPayAPI.total_tests += 1
-        store_id, terminal_id, property_id, revenue_center_id, location_name, revenue_center_name, dba_name = store_tuple
+        store_id, terminal_id, property_id, revenue_center_id, location_name, revenue_center_name, dba_name, batch = store_tuple
         base_page = BasePage(driver)
         is_safari = is_mac()
         failures = []
@@ -286,7 +298,7 @@ class TestFreedomPayAPI:
             checkout_url = response['CheckoutUrl']
 
             # Check for null/None URL first
-            if not checkout_url:
+            if not checkout_url or not checkout_url.startswith("https://"):
                 error_msg = f"Store not configured. API Response: {response.get('ResponseMessage', 'No message')}"
                 write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, error_msg)
                 
@@ -303,7 +315,7 @@ class TestFreedomPayAPI:
                 
                 # Write to CSV before skipping
                 write_results_to_csv(store_id, terminal_id, property_id, revenue_center_id, 
-                                   location_name, revenue_center_name, dba_name, results, timer_value)
+                                   location_name, revenue_center_name, dba_name, results, timer_value, batch)
                 
                 TestFreedomPayAPI.critical_failures += 1
                 TestFreedomPayAPI.failed_tests += 1
@@ -383,7 +395,7 @@ class TestFreedomPayAPI:
             # Write results to files
             write_timer_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, timer_value)
             write_results_to_csv(store_id, terminal_id, property_id, revenue_center_id, 
-                               location_name, revenue_center_name, dba_name, results, timer_value)
+                               location_name, revenue_center_name, dba_name, results, timer_value, batch)
             
             if failures:
                 # Determine failure type for counting
@@ -413,7 +425,7 @@ class TestFreedomPayAPI:
         except AssertionError as e:
             write_timer_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, timer_value)
             write_results_to_csv(store_id, terminal_id, property_id, revenue_center_id, 
-                               location_name, revenue_center_name, dba_name, results, timer_value)
+                               location_name, revenue_center_name, dba_name, results, timer_value, batch)
             write_failure_to_file(store_id, terminal_id, dba_name, property_id, revenue_center_id, str(e))
             
             screenshot_name = f"critical_{store_id}_assertion_error"
