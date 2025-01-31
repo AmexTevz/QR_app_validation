@@ -1,18 +1,367 @@
 batch,storeid,terminalid,propertyid,revenueCenterid,locationname,revenuecentername,dbname
-5,1570443006,2583243000,121,809,Los Angeles Airport,The Counter,The Counter T7 LAX
-5,1570444005,26188093001,121,811,Los Angeles Airport,Campanile,Campanille LAX
-5,16142576006,26191271009,121,37,Los Angeles Airport,Rolling Stone Bar & Grill,Rolling Stone T7 LAX
-5,16151342000,26208794009,121,830,Los Angeles Airport,WOLFGANG PK,THE WINE BAR T6 LAX
+1,16149131009,26201237009,122,1,Birmingham-Shuttlesworth International Airport,Red Mountain Grill,Red Mountain Grill BHM
+1,16294002007,26483643008,122,2,Birmingham-Shuttlesworth International Airport,The Scoreboard,THE SCOREBOARD CONC C BHM
+1,16144346001,26193436007,122,28,Birmingham-Shuttlesworth International Airport,Birmingham Brewhouse,Birmingham Brewhouse - Conc A BHM
+1,16144345002,26193435008,122,35,Birmingham-Shuttlesworth International Airport,Talladega Grill,N/A
+1,16223912003,26350906009,122,200,Birmingham-Shuttlesworth International Airport,Burger King,N/A
+1,16294003005,26483644006,122,282,Birmingham-Shuttlesworth International Airport,Tacos Locos,TACOS LOCOS CONC C BHM
+1,1570413002,2583213006,214,2,Fort Lauderdale–Hollywood International Airport,Torn Basil,Torn Basil T2 FLL
+1,16149068006,26201161009,214,4,Fort Lauderdale–Hollywood International Airport,Red Stripe T1B,Red Stripe Bar T1B FLL
+1,16149067007,26201160000,214,10,Fort Lauderdale–Hollywood International Airport,La Familia,La Familia T1A FLL
+1,16149362009,26201515002,214,65,Fort Lauderdale–Hollywood International Airport,MARGARTAVILLE,Margaritaville T1 FLL
+1,16141103000,26188908006,214,893,Fort Lauderdale–Hollywood International Airport,Whiskey River,WHISKEY RIVER CONC B FLL
+1,16352887000,26638853007,214,76,Fort Lauderdale–Hollywood International Airport,Umaizushi,T2 Umaizushi Sushi FLL
+1,16154835008,26216723008,214,216,Fort Lauderdale–Hollywood International Airport,Shula Burger,Shula Burger FLL
+1,16154785008,26216521002,214,224,Fort Lauderdale–Hollywood International Airport,Shake Shack,SHAKE SHACK DESIGN FLL
+1,16167020005,26240745002,214,292,Fort Lauderdale–Hollywood International Airport,Sergio's,Sergio's T1B FLL
+1,16154786007,26216522001,214,580,Fort Lauderdale–Hollywood International Airport,Auntie Anne's Pretzels,N/A
+1,16149365006,26201518009,214,768,Fort Lauderdale–Hollywood International Airport,Roccos Tacos,ROCCO'S TACOS T2-D FLL
+1,1010062035348,2010063192741,216,10,Washington Dulles International Airport,Devils Backbone,N/A
+1,16149391004,26201544007,216,44,Washington Dulles International Airport,BURGUNDY AND GOLD,Wash NFL BAR B IAD
+1,16149390005,26201543008,216,830,Washington Dulles International Airport,Chefs Table by Wolfgang Puck,N/A
+1,16149388009,26201541000,216,841,Washington Dulles International Airport,Carrabba's,Carrabbas IAD
+1,16149389008,26201542009,216,849,Washington Dulles International Airport,District ChopHouse,CHOPHOUSE DC IAD
+1,16307003000,26520434007,29,5,Indianapolis International Airport,Circle City Bar,Circle City Beer Garden IND
+1,16149404009,26201557001,29,47,Indianapolis International Airport,Pacers Bar,Pacers Bar Civic Plaza IND
+1,16225857008,26355725008,69,4,Orlando International Airport,Orange County Brewers,ORANGE COUNTY BREWERS W MCO
+1,16232437000,26367058000,69,56,Orlando International Airport,PGA TOUR Grill,PGA PALM COURT L3 MCO
+1,16152159000,26209971002,69,716,Orlando International Airport,Orlando City Pub,City Pub MCO
+1,16152158001,26209970003,69,781,Orlando International Airport,Bahama Breze,Bahama Breeze AS 4 MCO
+1,16244906000,26385790006,69,815,Orlando International Airport,Chili's,Chili's LS MCO
+1,16164467002,26236791003,69,840,Orlando International Airport,Macaroni Grill,Romano's Grill LS MCO
+1,1570452004,2583252008,69,845,Orlando International Airport,Outback Steakhouse,Outback AS4 MCO
+1,16144366006,26193457001,69,886,Orlando International Airport,On The Border,AS1 On The Border MCO
+1,16151759006,26209329001,120,1,Miami International Airport,Budweiser Brewhouse,Bud Brew House H MIA
+1,16152434007,26210324004,120,4,Miami International Airport,WynwoodE,Wynwood Cafe E MIA
+1,16202281004,26317394002,120,5,Miami International Airport,Wynwood W,Wynwood Warehouse Cafe MIA
+1,16152101009,26209906002,120,55,Miami International Airport,Jose Cuervo Tequileria,Jose Cuervo Teq MIA
+1,16152103007,26209908000,120,92,Miami International Airport,Beaudevin,N/A
+1,16152102008,26209907001,120,809,Miami International Airport,Counter Burger,Counter Burger D32 MIA
+1,16335299000,26602622008,120,811,Miami International Airport,Chilis,Chillis MIA
+1,1570458008,2583258002,120,813,Miami International Airport,Shula's Bar & Grill,Shulas Burger Bar MIA
+1,16143439001,26192337009,30,31,Raleigh-Durham International Airport,ACC American Café,ACC AMERICAN CAFE RDU
+1,16144777009,26193863009,30,350,Raleigh-Durham International Airport,Popeyes,Popeyes T2-D RDU
+1,16135929004,26176342005,30,812,Raleigh-Durham International Airport,42nd Street Oyster Bar,N/A
+1,16142579003,26191274006,30,893,Raleigh-Durham International Airport,Whisky River T2,Whisky River T2-D RDU
+1,16153890002,26214753006,166,1,Louisville International Airport,Books and Bourbon,Books & Bourbon SDF
+1,16329656009,26591411009,166,70,Louisville International Airport,Farmers Market Kiosk,Farmers Market B SDF
+1,16154133007,26215784006,166,794,Louisville International Airport,Coals Pizza,Coal's Artisan Piz SDF
+2,1570424009,26189284008,33,4,Charlotte Airport,Stock Car Café,B STOCK CAR CA CLT
+2,16141020000,26188793004,33,6,Charlotte Airport,Explorer Lounge,E Explorers Bar CLT
+2,16144355009,26193445006,33,10,Charlotte Airport,STELLA CHALICE C,STELLA CHALICE C
+2,16223643004,26350344003,33,13,Charlotte Airport,Sycamore Brewing,SYCAMORE BREWING E EXTENSION CLT
+2,16291822001,26479691003,33,15,Charlotte Airport,Queen Charlotte Kitchen,BAG CLAIM QUEEN CHARLOTTE KITC CLT
+2,16347092005,26622708001,33,17,Charlotte Airport,Crown Diner,THE CROWN DINER & DRINKS AN2 CLT
+2,1570429004,2583229008,33,835,Charlotte Airport,Bad Daddy's Burger Bar,BAD DADDY'S BU CLT
+2,16144353001,26193443008,33,852,Charlotte Airport,Phillips Famous Seafood,PHILLIPS FAMOUS SEAFOOD CLT
+2,1570430001,2583230005,33,893,Charlotte Airport,Whisky River,WHISKEY RIVER CLT
+2,16152104006,26209909009,33,224,Charlotte Airport,SHAKE SHACK,SHAKE SHACK CLT
+2,16274998000,26440929003,33,398,Charlotte Airport,Wow Bao,WOW BAO CLT
+2,16280679008,26457362007,33,440,Charlotte Airport,Jersey Mikes,MAIN JERS MIKE SUB CLT
+2,16144774002,26193860002,33,448,Charlotte Airport,Summerhouse,SUMMER HOUSE CLT
+2,1570428005,2583228009,33,572,Charlotte Airport,1897 Market,MARKETPLACE 18 CLT
+2,16291821003,26479690005,33,806,Charlotte Airport,Midwood,MIDWOOD SMOKEHOUSE CONV CLT
+2,16341464002,26614409006,33,19,Charlotte Airport,OMB Biergarten,OMB BIERGARTEN CLT
+2,16144356008,26193446005,33,20,Charlotte Airport,NODA,Noda Brewing A N CLT
+2,16144349008,26193439004,33,21,Charlotte Airport,Carolina Beer Co.,CAROLINA BEER CO. CLT
+2,1570425008,26188096008,33,55,Charlotte Airport,Jose Cuervo Tequileria,JOSE CUERVO TE CLT
+2,16151533009,26209025008,33,60,Charlotte Airport,Casa Bacardi,D RUM BAR & GR CLT
+2,16165747001,26238856001,33,92,Charlotte Airport,Beaudevin,BEAUDEVIN MAIN CLT
+2,16154886006,26216806008,91,5,Hartsfield-Jackson Atlanta International Airport,The Pecan,MISSION CTY ICE HS SAT
+2,16301316002,26501206002,91,8,Hartsfield-Jackson Atlanta International Airport,A Bar & Grill,The A Bar & Grill ATL
+2,16143547000,26192454006,91,75,Hartsfield-Jackson Atlanta International Airport,Umaizushi,UMAIZUSHI ATL
+2,16143552002,26192459001,91,289,Hartsfield-Jackson Atlanta International Airport,Lorena Garcia Tapas,LORENA GARCIA F ATL
+2,16143553001,26192460008,91,299,Hartsfield-Jackson Atlanta International Airport,El Taco,EL TACO TERM F ATL
+2,16143549008,26192456004,91,801,Hartsfield-Jackson Atlanta International Airport,Ecco,ECCO TERM F ATL
+2,16143548009,26192455005,91,841,Hartsfield-Jackson Atlanta International Airport,Carrabba's,CARRABAS ATL
+2,16143546001,26192453007,91,848,Hartsfield-Jackson Atlanta International Airport,ChopHouse,CHOPHOUSE ATL
+2,16142539002,26191216007,91,851,Hartsfield-Jackson Atlanta International Airport,LongHorn Steakhouse,LONGHORN STEAK C ATL
+2,1590481007,26115062001,84,800,Ronald Reagan Washington National Airport,Kapnos Taverna,KAPNOS TAVERNA DCA
+2,16149475003,26201661004,223,2,General Mitchell International Airport,Perlick,PERLICK GARDEN DISTRICT MKE
+2,16152477005,26210381004,223,65,General Mitchell International Airport,Miller Brewhouse,MILLER BREWHOUSE MKE
+2,16149474004,26201660005,223,130,General Mitchell International Airport,Great American Bagel,GREAT AMERICAN BAGEL MKE
+2,16143914005,26192833008,223,810,General Mitchell International Airport,Chili's,CHILI'S C MKE
+2,16142872007,26191590003,182,31,Piedmont Triad International Airport,ACC American Cafe,ACC CAFE SOUTH GSO
+2,16149368003,26201521004,182,50,Piedmont Triad International Airport,The Local,THE LOCAL GSO
+2,16149369002,26201522003,182,56,Piedmont Triad International Airport,PGA TOUR Grill,PGA TOUR GRILL PS GSO
+2,16149408005,26201561005,108,56,Jacksonville International Airport,PGA TOUR Grill,PGA TOUR GRILLE JAX
+2,16154787006,26216523000,108,474,Jacksonville International Airport,Firehouse Subs,FIREHOUSE SUBS FCT JAX
+2,16265151007,26420574001,108,475,Jacksonville International Airport,Firehouse Subs C,FIREHOUSE SUBS CONC C JAX
+2,16333757009,26599214009,108,811,Jacksonville International Airport,Chilis,CHILI'S POST CENTRAL JAX
+2,16140981009,26188745003,108,814,Jacksonville International Airport,Shula's Bar & Grill,SHULA'S BURGER BAR JAX
+2,16138591005,26185191008,108,815,Jacksonville International Airport,Chili's,CHILI'S POST CENTRAL JAX
+2,16144780004,26193866006,165,811,Bill and Hillary Clinton National Airport,Chili's,CHILI'S POST SEC LIT
+2,16154782001,26216518007,22,470,McGhee Tyson Airport,Quiznos,QUIZNOS TYS
+2,16152151008,26209963002,169,3,Memphis International Airport,Torn Basil A,TORN BASIL A MEM
+2,16190406001,26292451007,169,5,Memphis International Airport,Memphis Made Brewery,MEMPHIS MADE BREW. STEM B MEM
+2,16142869002,26191587008,169,41,Memphis International Airport,Home Team Sports,HOME TEAM SPORTS MEM
+2,16190407000,26292452006,169,51,Memphis International Airport,Grizz Grill,MEMPHIS GRIZZLIES CONC B END MEM
+2,16230133007,26363065009,169,340,Memphis International Airport,Chick Fil A,CHICK FIL A MEM
+2,16259797005,26411183002,169,811,Memphis International Airport,Chilis,CHILIS ROTUNDA MEM
+2,16144375005,26193466000,42,1,Nashville International Airport,Tennessee Tavern,TENNESSEE TAVERN BNA
+2,16141086001,26188891005,42,2,Nashville International Airport,Stage Café,STAGE CAFÉ BNA
+2,16232228003,26366661002,42,7,Nashville International Airport,Green Room,THE GREENROOM LOUNGE AND WHISKEY BAR BNA
+2,16232438008,26367059008,42,90,Nashville International Airport,Arrington Wine Bar & Grill,ARRINGTON WINE BAR & GRILL A BNA
+2,16154783000,26216519006,42,580,Nashville International Airport,Auntie Anne's Pretzels,AUNTIE ANNE'S BNA
+2,16317396006,26562996004,42,713,Nashville International Airport,Pharmacy Burger,PHARMACY BURGER AB CONNECTOR BNA
+2,16154836007,26216724007,211,224,NEW ORLEANS AP,Shake Shack,SHAKE SHACK MAIN WEST MSY
+2,16141101002,26188906008,211,710,NEW ORLEANS AP,Emeril's Table,EMERIL'S CONC 1 MSY
+2,16152492006,26210396007,211,785,NEW ORLEANS AP,CURE CE,CURE C EAST MSY
+2,16141100003,26188905009,211,811,NEW ORLEANS AP,Chili's,CHILI'S C EAST MSY
+2,16152493005,26210397006,211,777,NEW ORLEANS AP,Mondo,Mondo Main  West MSY
+2,16153718002,26212203006,218,1,Norfolk International Airport,James River Grill,JAMES RIVER GRIL A ORF
+2,16153716004,26212201008,218,2,Norfolk International Airport,Back Bay Bistro,BACK BAY BISTRO B ORF
+2,16153709003,26212194007,218,4,Norfolk International Airport,Here's to Heroes,HERE'S TO HEROES ORF
+2,16141021009,26188794003,218,50,Norfolk International Airport,The Local,THE LOCAL ORF
+2,16137928001,26184517008,218,200,Norfolk International Airport,Burger King,BURGER KING ORF
+2,16153706006,26212191000,41,1,Palm Beach International Airport,Sam Snead's Tour Tavern,SAM SNEED'S TOUR PBI
+2,16143543004,26192450000,41,6,Palm Beach International Airport,Nick's Tomatoe Pie,NICK'S TOMATO C PBI
+2,16151684006,26209230009,41,7,Palm Beach International Airport,Sam Adams Drafthouse,SAM ADAMS DRAFTHOUSE PBI
+2,16152433008,26210323005,41,9,Palm Beach International Airport,BLU2O Bar,BLU2O BAR - CONC B PBI
+2,16141104009,26188909005,41,10,Palm Beach International Airport,PBI Stinger Rays,STINGER RAYS PBI
+2,16337550004,26606174006,41,282,Palm Beach International Airport,Tacos Locos,TACOS LOCOS B TEMP UNIT PBI
+2,16151683007,26209229002,41,815,Palm Beach International Airport,Chili's,CHILI'S PBI
+2,16142868003,26191586009,159,58,Southwest Florida International Airport,Dewar's Clubhouse,DEWARS - C RSW
+2,16141042004,26188845002,159,60,Southwest Florida International Airport,Casa Bacardi,CASA BACARDI D RSW
+2,16153298000,26211624009,159,814,Southwest Florida International Airport,Shula's Bar & Grill,SHULA'S MAIN RSW
+2,16141041005,26188844003,159,1,Southwest Florida International Airport,Beaches Boardwalk Café,BEACHES BOARD CAFE RSW
+2,16151685005,26209231008,159,3,Southwest Florida International Airport,Palm City Market,PALM CITY MARKET RSW
+2,16348549003,26626640002,159,5,Southwest Florida International Airport,Fort Myers Brewing Company,FORT MYERS BREWING CO. RSW
+2,16141083004,26188888000,181,2,Sarasota–Bradenton International Airport,Gulf Breezer Bar,GULF BREEZE CAFE SRQ
+2,16153297001,26211623000,181,3,Sarasota–Bradenton International Airport,Kona Big Wave,KONA BIG WAVE SRQ
+2,16154784009,26216520003,181,58,Sarasota–Bradenton International Airport,Dewar's Clubhouse,DEWAR'S BAR MAIN SRQ
+2,16154138002,26215789001,222,8,Savannah/Hilton Head International Airport,Southbound Tap Room,SOUTHBOUND TAPROOM SAV
+2,16141097008,26188902002,222,56,Savannah/Hilton Head International Airport,PGA TOUR Grill,PGA TOUR GRILL SAV
+2,16144775001,26193861001,222,130,Savannah/Hilton Head International Airport,The Great American Bagel,THE GREAT AMERICAN BAGEL SAV
+2,16157636002,26224460009,70,9,Tampa International Airport,The Gasparilla Bar,GASPARILLA BAR F2 TPA
+2,16141070009,26188878002,70,29,Tampa International Airport,Cigar City Brewing,CIGAR CITY TPA
+2,16157637001,26224461008,70,31,Tampa International Airport,CIGAR CTY BREW F,CIGAR CTY BREW F TPA
+2,16153889005,26214752007,70,221,Tampa International Airport,Burger 21 A/S A,BURGER 21 A2 TPA
+2,16200553009,26314903003,70,222,Tampa International Airport,Burger 21 A/S C,BURGER 21 C-2 TPA
+2,16144776000,26193862000,70,392,Tampa International Airport,Pei Wei,PEI WEI A2 TPA
+2,16141082005,26188887001,70,874,Tampa International Airport,Columbia Café,COLUMBIA CAFE TPA
+2,16157635003,26224459002,70,881,Tampa International Airport,P.F. Chang's,PF CHANGS T3 TPA
+3,16143441007,26192339007,32,3,Albany International Airport,Silks Saratoga Bistro,Silks Bistro Main ALB
+3,16143444004,26192342002,32,4,Albany International Airport,Beer Union,Beer Union Conc B  ALB
+3,16144370000,26193461005,224,2,Boston Logan International Airport,The Market Bar,BOSTON PUB MKT BAR TERM C BOS
+3,16198391001,26306630009,224,3,Boston Logan International Airport,Sam Adam's Tap Room,Sam Adams  BOS
+3,16143453002,26192354007,224,63,Boston Logan International Airport,Kelly's Roast Beef,KELLYS ROAST BEEF TERM B BOS
+3,1010062038979,2010063197740,224,64,Boston Logan International Airport,Kelly's Roast Beef,N/A
+3,16356755005,26645087003,224,224,Boston Logan International Airport,Shake Shack,SHAKE SHACK C25 BOS
+3,16164843007,26237189001,224,326,Boston Logan International Airport,Santarpios Pizza,SANTARPIOS TERM C BOS
+3,16117302009,26151251007,224,551,Boston Logan International Airport,Market West,N/A
+3,16117303008,26151252006,224,552,Boston Logan International Airport,Market East,N/A
+3,16144369003,26193460006,224,719,Boston Logan International Airport,Trade,N/A
+3,16144373007,26193464002,83,10,Baltimore/Washington International Airport,Flying Dog,Flying Dog Pub BWI
+3,16317963003,26563885008,83,12,Baltimore/Washington International Airport,R&R Seafood Restaurant,R&R SEAFOOD D BWI
+3,16144372008,26193463003,83,90,Baltimore/Washington International Airport,Brix & Vine,Brix and Vine D BWI
+3,16141093002,26188898008,213,57,Cleveland Hopkins International Airport,Sammy's Beach Bar & Grill,Sammy Hagar A CLE
+3,16255147007,26403998003,87,3,John Glen Columbus International Airport,American Craft Tavern,American Craft Tav CMH
+3,16192914002,26297277008,87,4,John Glen Columbus International Airport,Hanger 815,CONC B HANGAR 815 CMH
+3,16331624003,26596423009,87,5,John Glen Columbus International Airport,Brew Dog,BrewDog Bar Con B CMH
+3,16144880003,26193993002,87,22,John Glen Columbus International Airport,Land-Grant Brewing Company,LAND-GRANT CONC B CMH
+3,16168809000,26245775004,87,56,John Glen Columbus International Airport,PGA TOUR Grill,PGA Tour Grill C CMH
+3,16151757008,26209327003,87,799,John Glen Columbus International Airport,Eddie George's Grille 27,Eddie Grge Grille CMH
+3,16144365007,26193456002,87,815,John Glen Columbus International Airport,Chili's,Chilli's CMH
+3,16144878007,26193991004,87,830,John Glen Columbus International Airport,Wolfgang Puck Express,Wolfgang Con B CMH
+3,16149049000,26201142003,155,58,Dayton International Airport,12th Fairway,12th Fairway DAY
+3,16168810007,26245776003,155,130,Dayton International Airport,The Great American Bagel,Great Amer Bagel DAY
+3,16142580000,26191275005,155,873,Dayton International Airport,Max & Erma's,Max & Ermas DAY
+3,16149062002,26201155007,171,1,Newark Liberty International Airport,Bud Brewhouse,BUD BREW HOUSE B6 EWR
+3,16149063001,26201156006,171,5,Newark Liberty International Airport,Malone Fish Market,MALONES/BAR B22 FOOD HALL EWR
+3,16149064000,26201157005,171,27,Newark Liberty International Airport,Belgian Beer Café,Belgian Beer B EWR
+3,16141073006,26188881007,171,61,Newark Liberty International Airport,The Unusual Times,Unusual Times EWR
+3,16153611000,26212092000,171,474,Newark Liberty International Airport,Firehouse Subs,FIREHOUSE SUBS B22 FOOD EWR
+3,16355006004,26642349000,24,4,Gerald R. Ford International Airport,Bell's Brewery,Bell's Tap and Table GRR
+3,16145222007,26194834003,24,23,Gerald R. Ford International Airport,Prospect Hill,Prospect Hill GRR
+3,16117299004,26151248003,162,1,Harrisburg International Airport,Capital Café,Capital Grill MDT
+3,16117300001,26151249002,162,852,Harrisburg International Airport,Phillips Famous Seafood,Phillips Seafood MDT
+3,16149405008,26201558000,163,2,Long Island MacArthur Airport,Blue Point Brewing,Blue Point  ISL
+3,16149867009,26202088007,53,12,John F. Kennedy International Airport,PZA,PZA T1 JFK
+3,16142545004,26191222009,53,14,John F. Kennedy International Airport,Soho Bistro,Soho Bistro T9 JFK
+3,16149866000,26202087008,53,50,John F. Kennedy International Airport,The Local,The Local T1 JFK
+3,16152488002,26210392001,215,1,Manchester-Boston Regional Airport,Sam Adams Brewhouse,N/A
+3,16141091004,26188896000,215,2,Manchester-Boston Regional Airport,Sam Adams Brewhouse,Sam Adams Meeting MHT
+3,16152490008,26210394009,215,4,Manchester-Boston Regional Airport,Shipyard Brew Pub,Shipyard MHT
+3,16152489001,26210393000,215,50,Manchester-Boston Regional Airport,The Local,The Local Post Sec MHT
+3,16152473009,26210377000,54,47,Minneapolis-Saint Paul International Airport,Minnesota Wild Bar,Minnesota Wild Bar MSP
+3,16269924003,26427961003,54,395,Minneapolis-Saint Paul International Airport,Hissho Sushi Concept,Hissho Term 1 Mall MSP
+3,16159331006,26227933001,54,474,Minneapolis-Saint Paul International Airport,Firehouse Subs,FIREHOUSE SUB MSP MALL T1 MSP
+3,16178641001,26261617003,54,572,Minneapolis-Saint Paul International Airport,Mkt Place,HH Marketplace MSP
+3,16142543006,26191220001,54,772,Minneapolis-Saint Paul International Airport,Bottle Rocket,Bottle Rocket Term 1 C- 5 MSP
+3,16141099006,26188904000,54,811,Minneapolis-Saint Paul International Airport,Chilis,Chili's Term 1 MSP
+3,16152483007,26210387008,151,3,Chicago O'Hare International Airport,Goose Island Beer Company,Liquor Bar C06 ORD
+3,16247062009,26389571006,151,37,Chicago O'Hare International Airport,Ice Dishes & Drinks,Ice Bar L ORD
+3,16153833002,26214671005,151,744,Chicago O'Hare International Airport,Burger Federation,Burger Fed Conc L ORD
+3,16318624000,26564949001,123,19,Portland International Jetport,Shipyard Brewport,Shipayard Brewport PWM
+3,1570477005,2583277009,123,20,Portland International Jetport,Shipyard Brew Pub,Shipyard Pub PWM
+3,16185863007,26274821008,123,130,Portland International Jetport,The Great American Bagel,Great American Bag PWM
+3,16165746002,26238855002,123,866,Portland International Jetport,Linda Bean's Lobster Cafe,Linda Bean PWM
+4,16189306004,26290602009,136,10,Calgary International Airport,LB Taphouse C,N/A
+4,16141094001,26188899007,221,6,Cincinnati/Northern Kentucky International Airport,Hop & Cask,N/A
+4,16279579003,26455025002,221,7,Cincinnati/Northern Kentucky International Airport,Covington Crossing,N/A
+4,16141088009,26188893003,221,50,Cincinnati/Northern Kentucky International Airport,The Local ,N/A
+4,16142578004,26191273007,221,52,Cincinnati/Northern Kentucky International Airport,Christian Moerlein,Moerlein Brew Pub A CVG
+4,16137909004,26184498001,221,208,Cincinnati/Northern Kentucky International Airport,Smashburger,N/A
+4,16144881002,26193994001,221,845,Cincinnati/Northern Kentucky International Airport,Outback Steakhouse,N/A
+4,16149052004,26201145000,157,25,Detroit Metropolitan Airport,Jolly Pumpkin (Conc D),Jolly Pumpkin DTW
+4,16149053003,26201146009,157,845,Detroit Metropolitan Airport,Outback Steakhouse,Outback DTW
+4,16149865001,26202086009,76,765,LA GUARDIA,La Chula,LA CHULA LGA
+4,16332098009,26596963004,76,808,LA GUARDIA,Il Viaggio,IL VIAGGIO LGA
+4,16154901007,26216821009,37,4,Lambert–St. Louis International Airport,Eighteen 76,Sports Bar E-10 STL
+4,16142544005,26191221000,37,22,Lambert–St. Louis International Airport,Schlafly Beer Bar & Grill,Schlafly's Sports STL
+4,16154898002,26216818004,37,23,Lambert–St. Louis International Airport,St. Louis Brewmasters Tap Room,St. Louis Brewmstr STL
+4,16141098007,26188903001,37,30,Lambert–St. Louis International Airport,Beers of the World,Budweiser Brewhse STL
+4,16154895005,26216815007,37,40,Lambert–St. Louis International Airport,Three Kings,Three Kings Bar E STL
+4,16141072007,26188880008,37,43,Lambert–St. Louis International Airport,Blue Note E20,Blue Note STL
+4,16334277007,26600628007,37,51,Lambert–St. Louis International Airport,Nascar,NASCAR C16 STL
+4,16154897003,26216817005,37,90,Lambert–St. Louis International Airport,Missouri Vineyards,Vineyeard Missouri STL
+4,16214750001,26336301004,37,320,Lambert–St. Louis International Airport,California Pizza Kitchen,N/A
+4,16314979002,26558673005,37,331,Lambert–St. Louis International Airport,Pizza Studio,PIZZA STUDIO A-03 STL
+4,16141043003,26188846001,37,816,Lambert–St. Louis International Airport,Chili's,N/A
+4,16152435006,26210325003,37,849,Lambert–St. Louis International Airport,Mike Shannon's Grille,Mike Shannons STL
+4,16182942009,26268987000,75,11,Montréal–Pierre Elliott Trudeau International Airp,Six Pints - Académie de la Bière,N/A
+4,16182943008,26268988009,75,14,Montréal–Pierre Elliott Trudeau International Airp,Ice Bar,N/A
+4,16141611005,26190168007,75,50,Montréal–Pierre Elliott Trudeau International Airp,Pork & Pickle,N/A
+4,16180973005,26265812007,75,846,Montréal–Pierre Elliott Trudeau International Airp,Houston Avenue Bar & Grill,N/A
+4,16182944007,26268989008,75,894,Montréal–Pierre Elliott Trudeau International Airp,L'Auberge St-Gabriel,N/A
+4,16141036002,26188839000,152,8,Chicago O'Hare International Airport,Goose Island T1B,N/A
+4,16153612009,26212093009,152,34,Chicago O'Hare International Airport,Goose Island (T3L),Goose Island L10 ORD
+4,16153613008,26212094008,152,46,Chicago O'Hare International Airport,Stanley's Chicago Blackhawks,Blackhawks T2 ORD
+4,16174375002,26254747001,152,75,Chicago O'Hare International Airport,Wicker Park,Wicker Park Sushi ORD
+4,16153822005,26214660008,152,76,Chicago O'Hare International Airport,Wicker Park T1-C,WickerPark Bar T1C ORD
+4,16153832003,26214670006,152,448,Chicago O'Hare International Airport,Summer House Santa Monica,Summer House ORD
+4,1570470002,2583270006,152,840,Chicago O'Hare International Airport,Romano's Macaroni Grill,Macaroni Grill ORD
+4,16154834009,26216722009,152,844,Chicago O'Hare International Airport,Tuscany,Tuscany ORD
+4,16350763005,26632850009,152,745,Chicago O'Hare International Airport,Butcher and The Burger,BUTCHER & BURGER T5 EAST ORD
+4,16153825002,26214663005,152,795,Chicago O'Hare International Airport,Publican Tavern,Publican ORD
+4,1570466008,2583266002,152,811,Chicago O'Hare International Airport,Chilli's T3 - H3,Chili's Bar T3H3 ORD
+4,16142932005,26191723003,152,812,Chicago O'Hare International Airport,Chilli's T1 - B14,Chili's Bar B14 ORD
+4,1570468006,26189282000,152,813,Chicago O'Hare International Airport,Chilli's T2 - F9,Chili's Bar E2 ORD
+4,1570469005,2583269009,152,814,Chicago O'Hare International Airport,Chilli's T3 - G9,Chili's G09 ORD
+4,16108408001,26137496001,168,758,Pittsburgh International Airport,Wigle Whiskey,WIGLE WHISKEY CONC A PIT
+4,16153696008,26212179006,168,826,Pittsburgh International Airport,TGI Friday D,TGI Fridays Conc D PIT
+4,16159060003,26227555008,39,350,The Mills at Jersey Gardens,Popeyes,#N/A
+4,16149132008,26201238008,39,810,The Mills at Jersey Gardens,Chili's Too,#N/A
+4,16162026000,26233046003,142,807,Toronto Pearson International Airport,The Hearth by Lynn Crawford,N/A
+4,16159034006,26227529001,142,858,Toronto Pearson International Airport,Lee Kitchen,N/A
+4,16180972006,26265811008,142,871,Toronto Pearson International Airport,Fionn MacCool's,N/A
+4,16113862000,26146186007,142,878,Toronto Pearson International Airport,Twist by Roger Mooking,N/A
+4,16144202004,26193250000,142,891,Toronto Pearson International Airport,Caplansky's Delicatessen,N/A
+4,16186291007,26275916001,143,7,Vancouver International Airport,Vancouver Canucks Bar & Grill,N/A
+4,16144203003,26193251009,143,8,Vancouver International Airport,Stanley Park,N/A
+5,16169325003,26246468004,77,340,Dallas Love Field Airport,Chick-fil-A,Chick-Fil-A DAL
+5,16113897009,26146221004,77,879,Dallas Love Field Airport,Cool River Café,Cool River DAL
+5,16149046003,26201139008,156,94,Denver International Airport,CRU Wine Bar,CRU WINE BAR DEN
+5,16141071008,26188879001,156,760,Denver International Airport,Great Divide,GREAT DIVIDE CON C DEN
+5,16141105008,26188910002,156,848,Denver International Airport,Denver ChopHouse,Denver Chop House DEN
+5,16108173004,26136837001,154,2,Dallas/Fort Worth International Airport,Beer Union,Int Beer Union DFW
+5,1570432009,26185711009,154,5,Dallas/Fort Worth International Airport,Dallas Cowboys Club,Cowboys Club A DFW
+5,16348784006,26626967009,154,6,Dallas/Fort Worth International Airport,Decanted,Decanted Wine Bar DFW
+5,16108170007,26136834004,154,248,Dallas/Fort Worth International Airport,Love Shack,Love Shack E12 DFW
+5,16169388007,26246531007,154,253,Dallas/Fort Worth International Airport,Sonny Bryan's,Sonny Bryans E13 DFW
+5,16108171006,26136835003,154,289,Dallas/Fort Worth International Airport,Lorena Garcia,Lorena Garcia Co A DFW
+5,1570431000,2583231004,154,320,Dallas/Fort Worth International Airport,California Pizza Kitchen,CPK A DFW
+5,16169389006,26246532006,154,343,Dallas/Fort Worth International Airport,Wingstop,Wing Stop DFW
+5,16295868000,26487142007,154,572,Dallas/Fort Worth International Airport,Plum Market,Plum Market - A8 DFW
+5,16348088002,26625810002,154,573,Dallas/Fort Worth International Airport,Plum Market,Plum Market - B4 DFW
+5,16108172005,26136836002,154,790,Dallas/Fort Worth International Airport,Maggiano's,MAGGIANO'S CONC C DFW
+5,16141074005,26188882006,160,2,Fresno International Airport,John Muir Tavern,N/A
+5,16149392003,26201545006,113,4,Houston International Airport,Mocking Bird,Mockingbird A N IAH
+5,16141022008,26188795002,113,36,Houston International Airport,Cadillac Bar,Cadillac Bar A S IAH
+5,16141107006,26188913009,113,791,Houston International Airport,Landry's Seafood,Landrys Seafood CN IAH
+5,16141106007,26188911001,113,842,Houston International Airport,3rd Bar Eating House,N/A
+5,16149401002,26201554004,113,862,Houston International Airport,Hugo's Cocina D,HUGO'S CONCINA D IAH
 5,16151343009,26208795008,121,22,Los Angeles Airport,BLU2O Bar,N/A
-5,16151758007,26209328002,121,867,Los Angeles Airport,Border Grill,Border Grill TBIT LAX
+5,16209075009,26328219002,121,32,Los Angeles Airport,Loteria! Grill,Loteria Grill T7 LAX
 5,16166987008,26240708007,121,34,Los Angeles Airport,Point the Way Cafe,Point The Way Cafe LAX
+5,16142576006,26191271009,121,37,Los Angeles Airport,Rolling Stone Bar & Grill,Rolling Stone T7 LAX
+5,16169356005,26246499007,121,345,Los Angeles Airport,Kentucky Fried Chicken,KFC TBIT LAX
+5,16151758007,26209328002,121,867,Los Angeles Airport,Border Grill,Border Grill TBIT LAX
 5,16169348006,26246491005,121,380,Los Angeles Airport,Panda Express,Panda Express TBIT LAX
 5,16169354007,26246497009,121,381,Los Angeles Airport,Panda Express T8,Panda Express  T8 LAX
-5,16169356005,26246499007,121,345,Los Angeles Airport,Kentucky Fried Chicken,KFC TBIT LAX
+5,1570443006,2583243000,121,809,Los Angeles Airport,The Counter,The Counter T7 LAX
+5,1570444005,26188093001,121,811,Los Angeles Airport,Campanile,Campanille LAX
+5,16151342000,26208794009,121,830,Los Angeles Airport,WOLFGANG PK,THE WINE BAR T6 LAX
 5,16206798001,26324337008,121,831,Los Angeles Airport,WPizza,WPIZZA T6 LAX
-5,16209075009,26328219002,121,32,Los Angeles Airport,Loteria! Grill,Loteria Grill T7 LAX
-
-
-
-
+5,16135927006,26176340007,36,67,Phoenix Sky Harbor International Airport,San Tan,San Tan PHX
+5,16158425005,26226453003,36,224,Phoenix Sky Harbor International Airport,Shake Shack,Shake Shack T3 PHX
+5,16158426004,26226454002,36,228,Phoenix Sky Harbor International Airport,Zinburger,ZinBurger N2 PHX
+5,1570475007,26188101001,36,804,Phoenix Sky Harbor International Airport,Blanco Tacos & Tequila,Blanco Tacos T4 N2 PHX
+5,16197508003,26304890009,36,821,Phoenix Sky Harbor International Airport,Cowboy Ciao,Cowbow Ciao T4 N4 PHX
+5,1570473009,2583273003,36,823,Phoenix Sky Harbor International Airport,Barrio Café PHX,Barrio Cafe T4 S2 PHX
+5,16232440004,26367061004,106,4,Seattle Tacoma International Airport,Open Space,OPENSPACE TAPROOM (NS0-17) SEA
+5,1570480000,2583280004,106,17,Seattle Tacoma International Airport,Seattle Sports Page Pub,N/A
+5,16323743001,26576031004,106,282,Seattle Tacoma International Airport,Tacos Locos North,Tacos Locos- North SEA
+5,16148762007,26197514003,106,703,Seattle Tacoma International Airport,Stone House Café,N/A
+5,16142542007,26191219004,106,737,Seattle Tacoma International Airport,Skillet,SKILLET NORTH SATELLITE SEA
+5,16223910007,26350904004,106,755,Seattle Tacoma International Airport,Costa Coffee,N/A
+5,16148763006,26197515002,106,774,Seattle Tacoma International Airport,Rel’Lish Burger Lounge,Rel'Lish Burger Lounge SEA
+5,16149005002,26201087000,106,832,Seattle Tacoma International Airport,Dungeness Bay Seafood House,N/A
+5,16142866005,26191584001,112,1,Salt Lake City International Airport,California Pizza Kitchen,CPK CONC A SLC
+5,16223912003,26350906009,112,200,Salt Lake City International Airport,Burger king ,N/A
+5,16196111004,26301941004,112,720,Salt Lake City International Airport,White Horse,WHITE HORSE SPIRITS & KITCHEN SLC
+5,16297523009,26489616008,112,759,Salt Lake City International Airport,Red Rock Brewing,RED ROCK BREWING SLC
+5,16338914001,26608817008,112,790,Salt Lake City International Airport,Maggianos,MAGGIANO'S CONC B EAST SLC
+5,16149865001,26202086009,112,888,Salt Lake City International Airport,Market Street Grill,LA CHULA LGA
+5,16142541008,26191218005,112,889,Salt Lake City International Airport,Market Street Grill,MARKET STREET GRILL CONC A SLC
+5,16154146002,26215797001,176,829,Sacramento International Airport,Esquire Grill,Esquire Grille SMF
+6,16144017009,26193433000,59,10,Ted Stevens Anchorage International Airport,Upper One Lounge,Upper One ANC
+6,16164468001,26236792002,59,827,Ted Stevens Anchorage International Airport,Norton Sound Seafood House,Norton Snd Seafood ANC
+6,16176432008,26257985005,59,828,Ted Stevens Anchorage International Airport,Humpy's,Humpy's Bar ANC
+6,16141102001,26188907007,59,830,Ted Stevens Anchorage International Airport,HUMPY TERM C,HUMPY'S - C  ANC
+6,16143545002,26192452008,231,1,AUSTIN AP,Beer Drop,The Beer Drop AUS
+6,16162750002,26234228001,231,286,AUSTIN AP,Zocalo Café,Zocalo Cafe AUS
+6,16169340004,26246483005,231,399,AUSTIN AP,Sushi a go go,Sushi A Go Go AUS
+6,16162746009,26234224005,231,430,AUSTIN AP,Noble Sandwich,Noble Sandwich Co AUS
+6,16116856001,26150745003,231,747,AUSTIN AP,24 Diner,24 DINER EAST  AUS
+6,16143544003,26192451009,231,756,AUSTIN AP,Parkside,Parkside EAST  AUS
+6,16149056000,26201149006,158,5,El Paso International Airport,Home Team Sports,Home Team Sports ELP
+6,16280681004,26457364003,158,7,El Paso International Airport,The Standard Star,Standard Star ELP
+6,16149057009,26201150002,158,42,El Paso International Airport,Carlos and Mickey's,Cantina Pre Sec ELP
+6,16149059007,26201152000,158,56,El Paso International Airport,PGA TOUR Grill,PGA ELP
+6,16141085002,26188890006,150,50,Fairbanks International Airport,The Local,The Local Bar FAI
+6,16141084003,26188889009,219,11,Spokane International Airport,MVP Sports Bar,N/A
+6,16142577005,26191272008,219,21,Spokane International Airport,Spokane Taproom,N/A
+6,16149383004,26201536007,219,22,Spokane International Airport,Vintage Washington Wine Bar,N/A
+6,16149370009,26201523002,88,6,Daniel Inouye International Airport,Island Brews,Island Brews Dmd H HNL
+6,16149371008,26201524001,88,7,Daniel Inouye International Airport,Island Brews,Island Brews Inter HNL
+6,16142540009,26191217006,88,9,Daniel Inouye International Airport,Stinger Ray's Tropical Bar & Grill,Stinger Rays HNL
+6,16117292001,26151241000,88,13,Daniel Inouye International Airport,Makai Plantation,Makai Plant Bar HNL
+6,16117293000,26151242009,88,15,Daniel Inouye International Airport,Leahi Bar,Leahi Mkt Bar T2 G2 HNL
+6,16277594004,26445806008,88,17,Daniel Inouye International Airport,Mauka Market,MAUKA  MARKET HNL
+6,16117291002,26151240001,88,50,Daniel Inouye International Airport,The Local,THE LOCAL HNL
+6,16149376003,26201529006,88,57,Daniel Inouye International Airport,PGA TOUR Grill,PGA Tour Grill G14 HNL
+6,16149386001,26201539004,88,59,Daniel Inouye International Airport,SAMMY HAGAR,SAMMY HAGAR (EWA) HNL
+6,16152118000,26209924000,57,12,Las Vegas International Airport,Burke in the Box,Burke in a Box LAS
+6,16135923000,26176329002,57,15,Las Vegas International Airport,California Pizza Kitchen,California Pizza LAS
+6,16337946004,26606831001,57,49,Las Vegas International Airport,Vegas Born,VEGAS BORN CONC D BURKE LAS
+6,16141034004,26188837002,57,55,Las Vegas International Airport,Jose Cuervo Tequileria,Jose Cuervo C LAS
+6,16135925008,26176338001,57,57,Las Vegas International Airport,Sammy's Beach Bar & Grill,Sammy Hagar Bar LAS
+6,16152125001,26209931001,57,59,Las Vegas International Airport,PGA TOUR Grill T3,PGA T3 LAS
+6,16135926007,26176339000,57,820,Las Vegas International Airport,Sammy's Woodfired Pizza & Grill,Sammys Wood  D LAS
+6,16141089008,26188894002,57,835,Las Vegas International Airport,Wolfgang Puck Express,D N WOLFGANG PUCK LAS
+6,16152128008,26209934008,57,848,Las Vegas International Airport,Las Vegas Chophouse & Brewery,Chop House T-3 LAS
+6,16146222005,26196182006,57,60,Las Vegas International Airport,PGA TOUR Grill 1B,PGA Gate B LAS
+6,16157633005,26224452009,57,224,Las Vegas International Airport,Shake Shack,Shake Shack LAS
+6,16149004003,26201086001,57,245,Las Vegas International Airport,Ruby's Diner,Ruby's Dinette D LAS
+6,16152129007,26209935007,57,393,Las Vegas International Airport,Pei Wei Express,Pei Wei T3 FC1 LAS
+6,16152130004,26209936006,57,816,Las Vegas International Airport,Chili's,Chilis Big Mouth D LAS
+6,16141076003,26188883005,57,818,Las Vegas International Airport,ChiliS T1,Chili's D-SW LAS
+6,16117295008,26151244007,90,1,Lihue Airport,Mea Inu Grill & Bar,MEA INU BAR LIH
+6,16152113005,26209919007,90,3,Lihue Airport,Tikki Bar,TIKI BAR  LOBBY LIH
+6,16117297006,26151246005,89,5,Kahului Airport,Stinger Ray's Tropical Bar & Grill,Stinger Rays OGG
+6,16117298005,26151247004,89,57,Kahului Airport,Sammy's Beach Bar & Grill,Sammy's Beach B&G OGG
+6,16232439006,26367060006,174,715,Portland International Airport,Screen Door,SCREEN DOOR CONC B PDX
+6,16154886006,26216806008,177,6,San Antonio International Airport,Mission City Ice House,MISSION CTY ICE HS SAT
+6,16141078001,26188885003,177,818,San Antonio International Airport,La Gloria,La Gloria SAT
+6,16141096009,26188901003,177,856,San Antonio International Airport,Rosario's Mexican Café,Rosario's Mexican SAT
+6,16141077002,26188884004,178,56,San Diego International Airport,PGA TOUR Grill,PGA TOUR REST SAN
+6,16154142006,26215793005,52,4,San Jose International Airport,Beer Union,San Jose Beer Union SJC
+6,16107571004,26135478007,52,26,San Jose International Airport,Gordon Biersch,Gordon Biersch SJC
+6,16154143005,26215794004,52,750,San Jose International Airport,Trader Vic's,TRADER VIC'S TERM B SJC
+6,16152100000,26209905003,180,48,John Wayne Airport,Anaheim Ducks Breakaway Bar & Grill,Anaheim Ducks SNA
+6,16223742004,26350614009,180,245,John Wayne Airport,Ruby's Dinette,Ruby's Diner SNA
+6,1589539001,26188772009,180,320,John Wayne Airport,California Pizza Kitchen,CPK SNA
+6,1589541007,26113920008,180,822,John Wayne Airport,Hobie Sand Bar,Hobie's Sand Bar SNA
 
